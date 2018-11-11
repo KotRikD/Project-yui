@@ -1,7 +1,9 @@
 ## ProjectYui
 
 > Асинхронный бот для ВКонтакте. Работает на python3.6+
+
 ![Sword Art Online персонаж Yui ;D](https://i.imgur.com/Ly0KpXw.jpg)
+
 ## Установка:
 
 1. Устанавливаем зависимости `python3.6 -m pip install -r requirements.txt`
