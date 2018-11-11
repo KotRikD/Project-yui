@@ -44,6 +44,9 @@ after_command(update, store)
 
 Что хранить и вызывать в store?
 Хранить можно всё, что угодно. store.<value> = value
+Основное:
+- command
+- args
 Вызывать можно:
 - reply() - Ответ на сообщение
 - upload_photo() - Загрузка фотографии
@@ -91,10 +94,10 @@ async def before_command(update, store):
     Logger.Nlog(f"Вау, пришло сообщение {update.text} от {update.from_id}")
 
     #Здесь хранилище будет уже сообщения.
-    command = update.command if update.get("command", False) else None
+    command = store.command if store.get("command", False) else None
     # Замечу почему так, бот регистрирует команды в определённую ячейку, этот же метод будет вызываться КАЖДОЕ сообщение
-    # даже без команды, так что не стоит отсюда что-либо вызывать связанное с этим, также у update есть ещё args (аргументы)
-    args = update.args if update.get("args", False) else None
+    # даже без команды, так что не стоит отсюда что-либо вызывать связанное с этим, также у store есть ещё args (аргументы)
+    args = store.args if store.get("args", False) else None
 
     # Например в течении этого цикла пагинов, мы хотим чтобы перед каждым сообщением бот оставлял что-нибудь.
     store['custom_message'] = "Пользователь, " # Теперь бот будет писать (Пользователь, <msg>)
