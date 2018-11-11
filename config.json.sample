@@ -1,0 +1,21 @@
+{
+  "VKToken": "<group token>",
+  "UseDB": true,
+  "DBSettings": {
+    "DBDriver": "psql",
+    "DBName": "db_name",
+    "DBUser": "db_user",
+    "DBHost": "localhost",
+    "DBPassword": "password",
+    "DBPort": 5432
+  },
+  "UseRedis": false,
+  "DBRedis": {
+    "DBHost": "localhost",
+    "DBPass": "pass",
+    "DBPort": 3392,
+    "DB": 2
+  },
+  "CoolDownDelay": 2,
+  "NeedLogMessage": true
+}

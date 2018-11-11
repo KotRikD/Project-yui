@@ -1,0 +1,9 @@
+venv/
+.idea/*
+.idea/
+__pycache__/*
+config.json
+db.sqlite3
+projectyui.log
+plugins/chatbot_simple
+plugins/eshe_test
