@@ -17,5 +17,6 @@
     "DB": 2
   },
   "CoolDownDelay": 2,
-  "NeedLogMessage": true
+  "NeedLogMessage": true,
+  "Prefixes": ["!", "бот"]
 }

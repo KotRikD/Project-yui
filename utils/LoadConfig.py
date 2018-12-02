@@ -20,6 +20,8 @@ DBRedis
 CoolDownDelay
 NeedLogMessage
 
+Prefixes
+
 '''
 need_values = [
     'VKToken',
@@ -28,7 +30,8 @@ need_values = [
     'UseRedis',
     'DBRedis',
     'CoolDownDelay',
-    'NeedLogMessage'
+    'NeedLogMessage',
+    'Prefixes'
 ]
 
 def load_config():

@@ -18,7 +18,7 @@ class Yui:
 
     def __init__(self):
         self.store = store
-        self.ver = "0.1.6 beta"
+        self.ver = "0.1.8 beta"
 
         Logger.Ylog(f"> Привет, я Yui! Бот для социальной сети ВК.\n> На данный момент моя версия: {self.ver}")
         load_config()
@@ -63,6 +63,15 @@ class Yui:
 
         await asyncio.sleep(0.1)
 
+        prefix = None
+        for lprefix in self.store.config.Prefixes:
+            if updated_message.text.startswith(lprefix):
+                updated_message.text = updated_message.text[len(lprefix):]
+                prefix = lprefix
+                break
+        if not prefix:
+            return True
+
         command = None
         for (k, v) in store.handlers.items():
             if updated_message.text.startswith(k):
@@ -97,6 +106,7 @@ class Yui:
         if command:
             currentStore.cmd = command
             currentStore.args = args
+            currentStore.prefix = prefix
 
         if await self.store.call_before_events(updated_message, currentStore):
             return True
