@@ -23,7 +23,7 @@ plugin = YPlugin(name="Эхо")
 
 @plugin.on_command("эхо")
 async def on_command(update, store):
-    what_u_write = ' '.join(update.args)
+    what_u_write = ' '.join(store.args)
     
     return await store.reply(f"Вы написали: {what_u_write}")
 ```
