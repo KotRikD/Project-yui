@@ -93,8 +93,6 @@ async def convert_to_message(update):
     Message.from_id = obj.get("from_id")
     Message.peer_id = obj.get("peer_id")
 
-    print(obj.get("from_id"))
-    print(obj.get("peer_id"))
     if int(obj.get("from_id")) != int(obj.get("peer_id")):
         Message.is_multichat = True
         Message.chat_id = obj.get("peer_id") - chat_const

@@ -2,12 +2,6 @@ aiohttp
 asyncio
 requests
 objdict
-
-
-chatterbot
-
-
-
 peewee_async
 psycopg2
 aiopg

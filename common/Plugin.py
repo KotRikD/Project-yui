@@ -42,7 +42,6 @@ class YPlugin(object):
     def on_command(self, command):
 
         def wrapper(func):
-            print(command)
             if type(command) in [list,tuple]:
                 for comm in command:
                     self.store.add_handler(comm, func)

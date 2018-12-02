@@ -43,9 +43,12 @@ class VKLongPoll:
         raw_response = json.loads(raw_respose_text)
         if 'error' in raw_response:
             error = ObjDict()
+            error.error = True
+            error.response = raw_response['error']
             return error
 
         sucs = ObjDict()
+        sucs.error = False
         sucs.response = raw_response['response']
         return sucs
 

@@ -1,25 +1,24 @@
+import asyncio
+import os
+import shlex
+import sys
 import time
-
-from common.Store import store
-import common.VK.Convert as Converter
-from common.VK.VKWrappers import make_upload_docs, make_upload_photo, make_reply
-import common.Logger as Logger
-
-
 import traceback
 
 from objdict import ObjDict
-import os
-import sys
-import asyncio
-import shlex
+
+import common.Logger as Logger
+import common.VK.Convert as Converter
+from common.Store import store
+from common.VK.VKWrappers import make_upload_docs, make_upload_photo, make_reply
 from utils import load_config
+
 
 class Yui:
 
     def __init__(self):
         self.store = store
-        self.ver = "0.1.5 beta"
+        self.ver = "0.1.6 beta"
 
         Logger.Ylog(f"> Привет, я Yui! Бот для социальной сети ВК.\n> На данный момент моя версия: {self.ver}")
         load_config()
@@ -33,12 +32,26 @@ class Yui:
 
         sys.path.insert(0, "plugins")
         for file in plugin_folder_files:
+            if file.startswith("__"):
+                continue
+            try:
+                plugin_subfolder = os.listdir(f"plugins/{file}")
+                sys.path.insert(0, f"plugins/{file}")
+                for subfiles in plugin_subfolder:
+                    if subfiles.endswith(".py"):
+                        try:
+                            a = __import__(os.path.splitext(subfiles)[0], None, None, [''])
+                            Logger.Slog(f"Юи загрузила плагин {subfiles}")
+                        except Exception as err:
+                            traceback.print_exc()
+            except Exception:
+                pass
+
             if file.endswith(".py"):
                 try:
-                    a  = __import__(os.path.splitext(file)[0], None, None, [''])
+                    a = __import__(os.path.splitext(file)[0], None, None, [''])
                     Logger.Slog(f"Юи загрузила плагин {file}")
                 except Exception as err:
-                    print(err)
                     traceback.print_exc()
         return True
 
@@ -52,8 +65,6 @@ class Yui:
 
         command = None
         for (k, v) in store.handlers.items():
-            print(k)
-            print(updated_message.text)
             if updated_message.text.startswith(k):
                 command = k
                 break
