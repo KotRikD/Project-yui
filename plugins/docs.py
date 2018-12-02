@@ -211,10 +211,10 @@ async def on_command(update, store):
 
     user = await get_or_none(MyModel, user_id=update.from_id) # Запрашиваем пользователя
     if not user: # Обидно, нашего пользователя не существует, давайте это исправим
-        if not update.args: # В данном случае, модель представляет собой просто строку и пользовательский id
+        if not store.args: # В данном случае, модель представляет собой просто строку и пользовательский id
             return await store.reply("А что вы хотите сохранить?") # Просим пользователя написать что-нибудь после команды.
 
-        text = ' '.join(update.args) # Сохраняем это в строку можно конечно и text = update.text[len(update.cmd):].strip()
+        text = ' '.join(store.args) # Сохраняем это в строку можно конечно и text = update.text[len(store.cmd):].strip()
 
         user = await store.config.db.get_or_create(MyModel, user_id=update.from_id, string_model=text) # store.config.db - наследуется от peewee_async.Manager, соответсвенно у него есть такой метод) Читаем документацию к библиотеке)
 

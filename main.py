@@ -3,18 +3,23 @@ import asyncio
 import common.Logger as logger
 from common.Store import store
 from common.VK.VKLongPoll import VKLongPoll
+from utils import load_config
+
 import db.Loader
 
-bot = Yui()
-
 async def call():
+    load_config()
+    await db.Loader.load()
+
+    global bot
+    bot = Yui()
+
     bot_longpoll = VKLongPoll(bot)
 
     current_group_id = await bot_longpoll.request("groups.getById")
     bot_longpoll.group_id = current_group_id.response[0]['id']
     store.config.group_id = current_group_id.response[0]['id']
 
-    await db.Loader.load()
     await store.call_on_init_handlers()
     logger.Nlog("Приступаю к приёму сообщений!")
     await bot_longpoll.start()

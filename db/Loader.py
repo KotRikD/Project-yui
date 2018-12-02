@@ -25,7 +25,8 @@ async def load():
 
         created_model = db.Models.BaseModel.__subclasses__()
         for x in created_model:
-            x.create_table(True)
+            with manager.allow_sync():
+                x.create_table(True)
 
     if store.config.get("UseRedis", False):
         import asyncio_redis

@@ -4,7 +4,7 @@ import peewee
 
 class BaseModel(peewee.Model):
     class Meta:
-        database = store.config.db
+        database = store.config.db.database
 
 async def get_or_none(model, *args, **kwargs):
     try:

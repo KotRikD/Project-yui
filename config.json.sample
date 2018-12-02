@@ -17,6 +17,7 @@
     "DB": 2
   },
   "CoolDownDelay": 2,
+  "UseChatMeta": false,
   "NeedLogMessage": true,
   "Prefixes": ["!", "бот"]
 }

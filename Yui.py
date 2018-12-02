@@ -11,19 +11,16 @@ import common.Logger as Logger
 import common.VK.Convert as Converter
 from common.Store import store
 from common.VK.VKWrappers import make_upload_docs, make_upload_photo, make_reply
-from utils import load_config
 
 import common.VK.Chatmeta as ChatMeta
-
 
 class Yui:
 
     def __init__(self):
         self.store = store
-        self.ver = "0.1.8 beta"
+        self.ver = "0.1.9 beta"
 
         Logger.Ylog(f"> Привет, я Yui! Бот для социальной сети ВК.\n> На данный момент моя версия: {self.ver}")
-        load_config()
         self.call_init()
 
     def call_init(self):
