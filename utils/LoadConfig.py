@@ -21,6 +21,7 @@ CoolDownDelay
 NeedLogMessage
 
 Prefixes
+UseChatMeta
 
 '''
 need_values = [
@@ -31,7 +32,8 @@ need_values = [
     'DBRedis',
     'CoolDownDelay',
     'NeedLogMessage',
-    'Prefixes'
+    'Prefixes',
+    'UseChatMeta'
 ]
 
 def load_config():

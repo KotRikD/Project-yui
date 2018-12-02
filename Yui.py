@@ -13,6 +13,8 @@ from common.Store import store
 from common.VK.VKWrappers import make_upload_docs, make_upload_photo, make_reply
 from utils import load_config
 
+import common.VK.Chatmeta as ChatMeta
+
 
 class Yui:
 
@@ -107,6 +109,9 @@ class Yui:
             currentStore.cmd = command
             currentStore.args = args
             currentStore.prefix = prefix
+
+        if self.store.config.UseChatMeta:
+            await ChatMeta.call_chat_meta(currentStore, updated_message)
 
         if await self.store.call_before_events(updated_message, currentStore):
             return True
