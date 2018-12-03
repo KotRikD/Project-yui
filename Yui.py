@@ -18,7 +18,8 @@ class Yui:
 
     def __init__(self):
         self.store = store
-        self.ver = "0.1.9 beta"
+        self.ver = "0.2.0 beta"
+        self.store.config.ver = self.ver
 
         Logger.Ylog(f"> Привет, я Yui! Бот для социальной сети ВК.\n> На данный момент моя версия: {self.ver}")
         self.call_init()
@@ -82,7 +83,7 @@ class Yui:
             args = shlex.split(updated_message.text[len(command):].strip())
 
             if self.store.config.NeedLogMessage:
-                Logger.Slog(
+                Logger.Ylog(
                     f"Пришла команда {command} с аргументами {args} из { f'ЛС {updated_message.peer_id}' if not updated_message.is_multichat else f'Беседы #{updated_message.chat_id}' }")
 
         ts = int(time.time())
