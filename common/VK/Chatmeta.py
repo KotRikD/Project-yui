@@ -1,4 +1,5 @@
 from common.Store import store as gstore
+import time
 
 class ChatData:
     def __init__(self, cid, admin_id, items, users, groups):
@@ -49,26 +50,28 @@ def create_refresh(message, store, peer_id):
 async def check_admin(store, update, peer_id, uid):
     req = await store.request('messages.getConversationMembers', peer_id=update.peer_id, fields="sex,screen_name,nickname,invited_by")
     if not 'items' in req.response:
-        cached_admins[peer_id] = False
+        cached_admins[peer_id] = [False, int(time.time())]
         return False
 
     for x in req.response['items']:
         if x['member_id'] == uid*-1:
             if 'is_admin' in x and x['is_admin']:
-                cached_admins[peer_id] = True
+                cached_admins[peer_id] = [True, int(time.time())]
                 return True
-            cached_admins[peer_id] = False
+            cached_admins[peer_id] = [False, int(time.time())]
             return False
 
         if x['member_id'] == uid:
             if 'is_admin' in x and x['is_admin']:
-                cached_admins[peer_id] = True
+                cached_admins[peer_id] = [True, int(time.time())]
                 return True
-            cached_admins[peer_id] = False
+            cached_admins[peer_id] = [False, int(time.time())]
             return False
 
-    cached_admins[peer_id] = False
+    cached_admins[peer_id] = [False, int(time.time())]
     return False
+
+#Refreshing every 5 minute 300SEC
 
 async def call_chat_meta(store, update):
     if not update.is_multichat:
@@ -76,7 +79,14 @@ async def call_chat_meta(store, update):
         store.meta_refresh = None
         return None
 
-    if update.peer_id in cached_admins and cached_admins.get(update.peer_id):
+    if update.peer_id in cached_admins and cached_admins.get(update.peer_id)[0]:
+        timeminus = cached_admins.get(update.peer_id)[1]
+        current_time = int(time.time())
+        if current_time+300<timeminus:
+            if not await check_admin(store, update, update.peer_id, gstore.config.group_id):
+                store.meta_data = None
+                store.meta_refresh = None
+                return None
         pass
     elif not await check_admin(store, update, update.peer_id, gstore.config.group_id):
         store.meta_data = None
