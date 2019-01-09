@@ -90,7 +90,8 @@ class Yui:
 
     async def process_update(self, update):
         updated_message = await Converter.convert_to_message(update)
-
+        if not updated_message:
+            return True
         await asyncio.sleep(0.1)
 
         prefix = None
